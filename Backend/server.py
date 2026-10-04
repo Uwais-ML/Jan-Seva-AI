@@ -229,7 +229,7 @@ async def websocket_audio_handler(request: web.Request) -> web.WebSocketResponse
             matches = engine.check_all_schemes(session.attributes)
             eligible_schemes = [m for m in matches if m.is_eligible][:4]
             if session.attributes:
-                engine.save_evaluation(session_id, eligible_schemes)
+                engine.save_evaluation(target_session_id, eligible_schemes)
 
         # ── Build history for LLM ─────────────────────────────────────────────
         history_for_llm = [
