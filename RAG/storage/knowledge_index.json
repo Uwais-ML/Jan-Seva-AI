@@ -1,0 +1,603 @@
+[
+  {
+    "doc_id": "json_pmkvy",
+    "title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0)",
+    "content": "Scheme: Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0)\nCategory: Skill Development & Employment\nDescription: Flagship skill development program providing industry-relevant technical and vocational training with government certification, stipends, and placement support.\nEligible Age: 15 to 45 years\nMax Annual Income: No strict limit\nTarget Occupations: Unemployed, Student, Dropout, Youth, Job Seeker, Artisan\nApplicable States: All\nBenefits: Free certification, NSQF-aligned training, DBT stipend, placement assistance, 3-year accidental insurance.\nOfficial Portal: https://www.skillindiadigital.gov.in\n",
+    "metadata": {
+      "scheme_id": "pmkvy",
+      "category": "Skill Development & Employment",
+      "source": "schemes_knowledge_base.json",
+      "tags": [
+        "skill",
+        "courses",
+        "training",
+        "jobs",
+        "youth",
+        "placement",
+        "pmkvy",
+        "vocational"
+      ],
+      "portal_url": "https://www.skillindiadigital.gov.in"
+    }
+  },
+  {
+    "doc_id": "json_ayushman_bharat",
+    "title": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY)",
+    "content": "Scheme: Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY)\nCategory: Healthcare\nDescription: Comprehensive health insurance offering ₹5 Lakh cashless coverage per family per year for secondary and tertiary hospitalization across empaneled hospitals.\nEligible Age: 0 to 120 years\nMax Annual Income: 250000\nTarget Occupations: All, Street Vendor, Farmer, Laborer, Domestic Worker, Driver, Construction Worker\nApplicable States: All\nBenefits: ₹5,00,000 cashless annual medical treatment per family, covers pre-existing diseases, over 1900 medical procedures.\nOfficial Portal: https://beneficiary.nha.gov.in\n",
+    "metadata": {
+      "scheme_id": "ayushman_bharat",
+      "category": "Healthcare",
+      "source": "schemes_knowledge_base.json",
+      "tags": [
+        "health",
+        "hospital",
+        "insurance",
+        "ayushman",
+        "treatment",
+        "bpl",
+        "medical",
+        "cashless"
+      ],
+      "portal_url": "https://beneficiary.nha.gov.in"
+    }
+  },
+  {
+    "doc_id": "json_pm_kisan",
+    "title": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+    "content": "Scheme: Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)\nCategory: Agriculture & Income Support\nDescription: Direct income support of ₹6,000 per year in three 4-monthly installments of ₹2,000 to all landholding farmer families across India.\nEligible Age: 18 to 100 years\nMax Annual Income: No strict limit\nTarget Occupations: Farmer, Cultivator, Agriculture\nApplicable States: All\nBenefits: ₹6,000 direct bank transfer per year in 3 equal installments of ₹2,000.\nOfficial Portal: https://pmkisan.gov.in\n",
+    "metadata": {
+      "scheme_id": "pm_kisan",
+      "category": "Agriculture & Income Support",
+      "source": "schemes_knowledge_base.json",
+      "tags": [
+        "farmer",
+        "kisan",
+        "agriculture",
+        "farming",
+        "crop",
+        "dbt",
+        "pm-kisan"
+      ],
+      "portal_url": "https://pmkisan.gov.in"
+    }
+  },
+  {
+    "doc_id": "json_pm_svanidhi",
+    "title": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi)",
+    "content": "Scheme: PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi)\nCategory: Micro Credit & Livelihood\nDescription: Collateral-free working capital micro-loans starting from ₹10,000 up to ₹50,000 with 7% interest subsidy for street vendors and hawkers.\nEligible Age: 18 to 75 years\nMax Annual Income: 300000\nTarget Occupations: Street Vendor, Hawker, Thelawala, Artisan, Cobbler, Barber, Small Shopkeeper\nApplicable States: All\nBenefits: Collateral-free loans (₹10k, ₹20k, ₹50k), 7% interest subsidy, up to ₹1,200 annual digital cashback.\nOfficial Portal: https://pmsvanidhi.mohua.gov.in\n",
+    "metadata": {
+      "scheme_id": "pm_svanidhi",
+      "category": "Micro Credit & Livelihood",
+      "source": "schemes_knowledge_base.json",
+      "tags": [
+        "street vendor",
+        "loan",
+        "hawker",
+        "working capital",
+        "thela",
+        "svanidhi",
+        "micro loan"
+      ],
+      "portal_url": "https://pmsvanidhi.mohua.gov.in"
+    }
+  },
+  {
+    "doc_id": "json_mudra_yojana",
+    "title": "Pradhan Mantri MUDRA Yojana (PMMY)",
+    "content": "Scheme: Pradhan Mantri MUDRA Yojana (PMMY)\nCategory: Business & Self-Employment\nDescription: Collateral-free business loans up to ₹10 Lakh (Shishu, Kishore, Tarun) to support non-corporate, non-farm micro and small enterprises.\nEligible Age: 18 to 65 years\nMax Annual Income: No strict limit\nTarget Occupations: Entrepreneur, Shopkeeper, Small Business, Self Employed, Artisan, Trader, Manufacturer\nApplicable States: All\nBenefits: Collateral-free loans up to ₹50k (Shishu), up to ₹5 Lakh (Kishore), up to ₹10-20 Lakh (Tarun).\nOfficial Portal: https://www.mudra.org.in\n",
+    "metadata": {
+      "scheme_id": "mudra_yojana",
+      "category": "Business & Self-Employment",
+      "source": "schemes_knowledge_base.json",
+      "tags": [
+        "mudra",
+        "business loan",
+        "startup",
+        "entrepreneur",
+        "shopkeeper",
+        "collateral free"
+      ],
+      "portal_url": "https://www.mudra.org.in"
+    }
+  },
+  {
+    "doc_id": "json_sukanya_samriddhi",
+    "title": "Sukanya Samriddhi Yojana (SSY)",
+    "content": "Scheme: Sukanya Samriddhi Yojana (SSY)\nCategory: Women & Child Welfare\nDescription: Government-backed high-interest savings scheme for girl children up to 10 years of age with EEE tax exemption under Beti Bachao Beti Padhao.\nEligible Age: 0 to 10 years\nMax Annual Income: No strict limit\nTarget Occupations: Girl Child\nApplicable States: All\nBenefits: High guaranteed interest (~8.2% p.a.), Section 80C tax exemption, maturity at 21 years or marriage after 18.\nOfficial Portal: https://www.indiapost.gov.in\n",
+    "metadata": {
+      "scheme_id": "sukanya_samriddhi",
+      "category": "Women & Child Welfare",
+      "source": "schemes_knowledge_base.json",
+      "tags": [
+        "girl child",
+        "daughter",
+        "savings",
+        "sukanya",
+        "beti bachao",
+        "tax free",
+        "education fund"
+      ],
+      "portal_url": "https://www.indiapost.gov.in"
+    }
+  },
+  {
+    "doc_id": "json_naps",
+    "title": "National Apprenticeship Promotion Scheme (NAPS-2)",
+    "content": "Scheme: National Apprenticeship Promotion Scheme (NAPS-2)\nCategory: Skill Development & Apprenticeship\nDescription: On-the-job industrial apprenticeship training with government stipend sharing (25% up to ₹1,500/month DBT) and recognized certification.\nEligible Age: 14 to 35 years\nMax Annual Income: No strict limit\nTarget Occupations: Student, Graduate, ITI Pass, Diploma Holder, Youth, Unemployed\nApplicable States: All\nBenefits: Industry work experience, 25% stipend support up to ₹1,500/month DBT, National Apprenticeship Certificate.\nOfficial Portal: https://www.apprenticeshipindia.gov.in\n",
+    "metadata": {
+      "scheme_id": "naps",
+      "category": "Skill Development & Apprenticeship",
+      "source": "schemes_knowledge_base.json",
+      "tags": [
+        "apprenticeship",
+        "naps",
+        "internship",
+        "stipend",
+        "iti",
+        "diploma",
+        "skill india"
+      ],
+      "portal_url": "https://www.apprenticeshipindia.gov.in"
+    }
+  },
+  {
+    "doc_id": "pm_svanidhi_sec_0",
+    "title": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi) - Overview",
+    "content": "# PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi)",
+    "metadata": {
+      "source": "pm_svanidhi.md",
+      "parent_title": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi)",
+      "section": "Overview"
+    }
+  },
+  {
+    "doc_id": "pm_svanidhi_sec_1",
+    "title": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi) - Overview",
+    "content": "## Overview\nPM SVANidhi is a special micro-credit facility launched by the Ministry of Housing and Urban Affairs to provide affordable collateral-free working capital loans to street vendors affected by economic disruption.",
+    "metadata": {
+      "source": "pm_svanidhi.md",
+      "parent_title": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi)",
+      "section": "Overview"
+    }
+  },
+  {
+    "doc_id": "pm_svanidhi_sec_2",
+    "title": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi) - Eligibility Criteria",
+    "content": "## Eligibility Criteria\n- **Target Beneficiaries:** Urban street vendors, hawkers, thelawalas, rehri-patri vendors selling goods like vegetables, fruits, ready-to-eat street food, tea, apparel, artisan products, barbers, and cobblers.\n- **Location:** Vendors vending in urban areas, peri-urban, and rural surrounding areas.\n- **Documents:** Certificate of Vending (CoV) / Identity Card issued by Urban Local Bodies (ULBs) or Letter of Recommendation (LoR).\n- **Age:** 18 years and above.",
+    "metadata": {
+      "source": "pm_svanidhi.md",
+      "parent_title": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi)",
+      "section": "Eligibility Criteria"
+    }
+  },
+  {
+    "doc_id": "pm_svanidhi_sec_3",
+    "title": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi) - Loan Tranches and Benefits",
+    "content": "## Loan Tranches and Benefits\n- **1st Tranche Loan:** Up to ₹10,000 with a 1-year repayment tenure.\n- **2nd Tranche Loan:** Up to ₹20,000 on timely or early repayment of the 1st loan (tenure 18 months).\n- **3rd Tranche Loan:** Up to ₹50,000 on timely repayment of the 2nd loan (tenure 36 months).\n- **Interest Subsidy:** 7% interest subsidy credited directly to the vendor's bank account quarterly upon regular repayments.\n- **Digital Cash Back:** Monthly cashback up to ₹100 (up to ₹1,200 annually) for conducting digital UPI transactions.\n- **Collateral:** Zero collateral or guarantor required.",
+    "metadata": {
+      "source": "pm_svanidhi.md",
+      "parent_title": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi)",
+      "section": "Loan Tranches and Benefits"
+    }
+  },
+  {
+    "doc_id": "pm_svanidhi_sec_4",
+    "title": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi) - How to Apply",
+    "content": "## How to Apply\n1. Check eligibility on `https://pmsvanidhi.mohua.gov.in`.\n2. Apply through Common Service Centers (CSC), Urban Local Bodies, or banking correspondents.\n3. Link mobile with Aadhaar for Aadhaar-based e-KYC.",
+    "metadata": {
+      "source": "pm_svanidhi.md",
+      "parent_title": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi)",
+      "section": "How to Apply"
+    }
+  },
+  {
+    "doc_id": "pm_svanidhi_sec_5",
+    "title": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi) - Official Portal & Source",
+    "content": "## Official Portal & Source\n- Official Portal: https://pmsvanidhi.mohua.gov.in\n- Ministry: Ministry of Housing and Urban Affairs (MoHUA)",
+    "metadata": {
+      "source": "pm_svanidhi.md",
+      "parent_title": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi)",
+      "section": "Official Portal & Source"
+    }
+  },
+  {
+    "doc_id": "ayushman_bharat_sec_0",
+    "title": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY) - Overview",
+    "content": "# Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY)",
+    "metadata": {
+      "source": "ayushman_bharat.md",
+      "parent_title": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY)",
+      "section": "Overview"
+    }
+  },
+  {
+    "doc_id": "ayushman_bharat_sec_1",
+    "title": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY) - Overview",
+    "content": "## Overview\nAyushman Bharat PM-JAY is the world's largest government-funded health assurance scheme. It provides health cover of ₹5,00,000 per family per year for secondary and tertiary care hospitalization across public and empaneled private hospitals in India.",
+    "metadata": {
+      "source": "ayushman_bharat.md",
+      "parent_title": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY)",
+      "section": "Overview"
+    }
+  },
+  {
+    "doc_id": "ayushman_bharat_sec_2",
+    "title": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY) - Key Objectives",
+    "content": "## Key Objectives\n- Protect vulnerable and economically poor families from catastrophic health expenditures.\n- Provide cashless and paperless access to healthcare services at empaneled hospitals.\n- Strengthen public healthcare infrastructure and primary health centers (Ayushman Arogya Mandirs).",
+    "metadata": {
+      "source": "ayushman_bharat.md",
+      "parent_title": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY)",
+      "section": "Key Objectives"
+    }
+  },
+  {
+    "doc_id": "ayushman_bharat_sec_3",
+    "title": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY) - Eligibility Criteria",
+    "content": "## Eligibility Criteria\n- **Age:** No restriction on age (all family members covered).\n- **Family Size:** No cap on family size or gender.\n- **Economic Criteria:** Based on Socio-Economic Caste Census (SECC 2011) criteria:\n  - Rural families living in kutcha houses, households without adult male members (16-59 years), female-headed households with no adult male member, SC/ST households, landless casual manual workers.\n  - Urban categories: Ragpickers, domestic workers, street vendors, cobblers, construction workers, plumbers, transport workers, delivery workers.\n  - State ration card holders under Antyodaya Anna Yojana (AAY) and Priority Household (PHH).\n- **Income Limit:** Generally annual family income below ₹2,50,000 or meeting BPL/SECC deprivation indicators.\n- **Senior Citizens 70+:** Recently expanded to cover all senior citizens aged 70 and above, regardless of income, under a distinct Ayushman Vaya Vandana card with ₹5 Lakh health cover.\n- **Applicable States:** All States and UTs except where state-specific schemes operate independently (e.g. West Bengal, Odisha - though some now integrating).",
+    "metadata": {
+      "source": "ayushman_bharat.md",
+      "parent_title": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY)",
+      "section": "Eligibility Criteria"
+    }
+  },
+  {
+    "doc_id": "ayushman_bharat_sec_4",
+    "title": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY) - Benefits Provided",
+    "content": "## Benefits Provided\n- Cashless hospitalization cover of up to ₹5 Lakh per year per family.\n- Covers medical examination, consultation, pre-hospitalization tests (up to 3 days), post-hospitalization medicine and care (up to 15 days).\n- Covers more than 1,949 medical and surgical procedures including oncology, cardiology, neurosurgery, and orthopedics.\n- All pre-existing health conditions are covered from day one.",
+    "metadata": {
+      "source": "ayushman_bharat.md",
+      "parent_title": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY)",
+      "section": "Benefits Provided"
+    }
+  },
+  {
+    "doc_id": "ayushman_bharat_sec_5",
+    "title": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY) - How to Check Eligibility and Apply",
+    "content": "## How to Check Eligibility and Apply\n1. Visit the official portal `https://beneficiary.nha.gov.in` or download the Ayushman App.\n2. Enter mobile number, Aadhaar number, or Ration Card number to search family records.\n3. If eligible, complete e-KYC using Aadhaar OTP or biometric authentication.\n4. Download the digital Ayushman Card immediately.",
+    "metadata": {
+      "source": "ayushman_bharat.md",
+      "parent_title": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY)",
+      "section": "How to Check Eligibility and Apply"
+    }
+  },
+  {
+    "doc_id": "ayushman_bharat_sec_6",
+    "title": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY) - Official Portal & Source",
+    "content": "## Official Portal & Source\n- Official Portal: https://beneficiary.nha.gov.in\n- Authority: National Health Authority (NHA), Ministry of Health and Family Welfare (MoHFW)",
+    "metadata": {
+      "source": "ayushman_bharat.md",
+      "parent_title": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana (AB-PMJAY)",
+      "section": "Official Portal & Source"
+    }
+  },
+  {
+    "doc_id": "pmkvy_sec_0",
+    "title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0) - Overview",
+    "content": "# Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0)",
+    "metadata": {
+      "source": "pmkvy.md",
+      "parent_title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0)",
+      "section": "Overview"
+    }
+  },
+  {
+    "doc_id": "pmkvy_sec_1",
+    "title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0) - Overview",
+    "content": "## Overview\nPradhan Mantri Kaushal Vikas Yojana (PMKVY) is the flagship scheme of the Ministry of Skill Development & Entrepreneurship (MSDE) implemented by National Skill Development Corporation (NSDC). The objective is to enable Indian youth to take up industry-relevant skill training that will help them secure a better livelihood.",
+    "metadata": {
+      "source": "pmkvy.md",
+      "parent_title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0)",
+      "section": "Overview"
+    }
+  },
+  {
+    "doc_id": "pmkvy_sec_2",
+    "title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0) - Key Objectives",
+    "content": "## Key Objectives\n- Provide short-term skill training, recognition of prior learning (RPL), and special projects.\n- Align training with National Skills Qualification Framework (NSQF).\n- Foster entrepreneurship and job placement for certified trainees.",
+    "metadata": {
+      "source": "pmkvy.md",
+      "parent_title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0)",
+      "section": "Key Objectives"
+    }
+  },
+  {
+    "doc_id": "pmkvy_sec_3",
+    "title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0) - Eligibility Criteria",
+    "content": "## Eligibility Criteria\n- **Age:** 15 to 45 years.\n- **Nationality:** Citizen of India with valid Aadhaar card.\n- **Education:** Open to candidates with basic school education (8th/10th/12th pass) or college dropouts looking for vocational skills.\n- **Employment Status:** Unemployed youth or school/college dropouts.\n- **Income Limit:** No strict upper income limit, but preference is given to economically disadvantaged youth.\n- **Applicable States:** All States and Union Territories across India.",
+    "metadata": {
+      "source": "pmkvy.md",
+      "parent_title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0)",
+      "section": "Eligibility Criteria"
+    }
+  },
+  {
+    "doc_id": "pmkvy_sec_4",
+    "title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0) - Benefits and Financial Assistance",
+    "content": "## Benefits and Financial Assistance\n- 100% free skill training sponsored by the Government.\n- Government certification recognized across India and globally.\n- Direct Benefit Transfer (DBT) stipend for eligible candidates during training.\n- Placement assistance and post-placement support allowance.\n- Accidental insurance coverage for 3 years for certified candidates.",
+    "metadata": {
+      "source": "pmkvy.md",
+      "parent_title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0)",
+      "section": "Benefits and Financial Assistance"
+    }
+  },
+  {
+    "doc_id": "pmkvy_sec_5",
+    "title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0) - Sectors and Courses Covered",
+    "content": "## Sectors and Courses Covered\n- Information Technology (IT-ITeS)\n- Healthcare and Nursing Assistance\n- Automotive and Electric Vehicles (EV)\n- Agriculture and Food Processing\n- Electronics and Hardware\n- Apparel, Textiles, and Handloom\n- Solar and Renewable Energy Installation",
+    "metadata": {
+      "source": "pmkvy.md",
+      "parent_title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0)",
+      "section": "Sectors and Courses Covered"
+    }
+  },
+  {
+    "doc_id": "pmkvy_sec_6",
+    "title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0) - How to Apply",
+    "content": "## How to Apply\n1. Visit the official Skill India Digital portal at `https://www.skillindiadigital.gov.in`.\n2. Register using mobile number and Aadhaar authentication.\n3. Select desired skill course and nearest PMKVY Training Centre.\n4. Complete the training and pass the assessment to receive certification and placement support.",
+    "metadata": {
+      "source": "pmkvy.md",
+      "parent_title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0)",
+      "section": "How to Apply"
+    }
+  },
+  {
+    "doc_id": "pmkvy_sec_7",
+    "title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0) - Official Portal & Source",
+    "content": "## Official Portal & Source\n- Official Portal: https://www.skillindiadigital.gov.in\n- Ministry: Ministry of Skill Development and Entrepreneurship (MSDE)",
+    "metadata": {
+      "source": "pmkvy.md",
+      "parent_title": "Pradhan Mantri Kaushal Vikas Yojana (PMKVY 4.0)",
+      "section": "Official Portal & Source"
+    }
+  },
+  {
+    "doc_id": "pm_kisan_sec_0",
+    "title": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) - Overview",
+    "content": "# Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+    "metadata": {
+      "source": "pm_kisan.md",
+      "parent_title": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+      "section": "Overview"
+    }
+  },
+  {
+    "doc_id": "pm_kisan_sec_1",
+    "title": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) - Overview",
+    "content": "## Overview\nPM-KISAN is a Central Sector Scheme launched to supplement the financial needs of landholding farmers in procuring inputs for agricultural and allied activities, as well as domestic needs.",
+    "metadata": {
+      "source": "pm_kisan.md",
+      "parent_title": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+      "section": "Overview"
+    }
+  },
+  {
+    "doc_id": "pm_kisan_sec_2",
+    "title": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) - Key Objectives",
+    "content": "## Key Objectives\n- Augment farmers' income and prevent distress selling.\n- Support timely input purchases for Kharif and Rabi cropping seasons.",
+    "metadata": {
+      "source": "pm_kisan.md",
+      "parent_title": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+      "section": "Key Objectives"
+    }
+  },
+  {
+    "doc_id": "pm_kisan_sec_3",
+    "title": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) - Eligibility Criteria",
+    "content": "## Eligibility Criteria\n- **Target Beneficiaries:** All landholding farmer families having cultivable land in their name.\n- **Exclusion Criteria:**\n  - Institutional landholders.\n  - Farmer families holding constitutional posts.\n  - Present or retired officers/employees of State/Central Government and PSUs (excluding multi-tasking staff / Class IV).\n  - Income tax payers of last assessment year.\n  - Doctors, engineers, lawyers, chartered accountants, and architects registered with professional bodies.\n  - Monthly pension of ₹10,000 or more for retired pensioners.\n- **Applicable States:** All States and UTs across India.",
+    "metadata": {
+      "source": "pm_kisan.md",
+      "parent_title": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+      "section": "Eligibility Criteria"
+    }
+  },
+  {
+    "doc_id": "pm_kisan_sec_4",
+    "title": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) - Benefits Provided",
+    "content": "## Benefits Provided\n- Financial benefit of ₹6,000 per year transferred directly to bank accounts.\n- Paid in three equal installments of ₹2,000 every four months:\n  - Period 1: April to July\n  - Period 2: August to November\n  - Period 3: December to March\n- 100% funding by the Government of India via Direct Benefit Transfer (DBT).",
+    "metadata": {
+      "source": "pm_kisan.md",
+      "parent_title": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+      "section": "Benefits Provided"
+    }
+  },
+  {
+    "doc_id": "pm_kisan_sec_5",
+    "title": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) - How to Apply",
+    "content": "## How to Apply\n1. Visit the PM-KISAN portal at `https://pmkisan.gov.in`.\n2. Click on 'New Farmer Registration'.\n3. Enter Aadhaar number, mobile number, and select rural or urban farmer.\n4. Upload land records (Khasra/Khatauni) and bank account details.\n5. Mandatory e-KYC must be completed using Aadhaar OTP or facial recognition via PM-KISAN mobile app.",
+    "metadata": {
+      "source": "pm_kisan.md",
+      "parent_title": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+      "section": "How to Apply"
+    }
+  },
+  {
+    "doc_id": "pm_kisan_sec_6",
+    "title": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) - Official Portal & Source",
+    "content": "## Official Portal & Source\n- Official Portal: https://pmkisan.gov.in\n- Ministry: Ministry of Agriculture and Farmers Welfare",
+    "metadata": {
+      "source": "pm_kisan.md",
+      "parent_title": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+      "section": "Official Portal & Source"
+    }
+  },
+  {
+    "doc_id": "sukanya_samriddhi_sec_0",
+    "title": "Sukanya Samriddhi Yojana (SSY) - Overview",
+    "content": "# Sukanya Samriddhi Yojana (SSY)",
+    "metadata": {
+      "source": "sukanya_samriddhi.md",
+      "parent_title": "Sukanya Samriddhi Yojana (SSY)",
+      "section": "Overview"
+    }
+  },
+  {
+    "doc_id": "sukanya_samriddhi_sec_1",
+    "title": "Sukanya Samriddhi Yojana (SSY) - Overview",
+    "content": "## Overview\nSukanya Samriddhi Yojana is a Government of India backed small savings scheme initiated under the \"Beti Bachao, Beti Padhao\" campaign to build a fund for the education and marriage of a girl child.",
+    "metadata": {
+      "source": "sukanya_samriddhi.md",
+      "parent_title": "Sukanya Samriddhi Yojana (SSY)",
+      "section": "Overview"
+    }
+  },
+  {
+    "doc_id": "sukanya_samriddhi_sec_2",
+    "title": "Sukanya Samriddhi Yojana (SSY) - Key Rules & Eligibility Criteria",
+    "content": "## Key Rules & Eligibility Criteria\n- **Age of Girl Child:** Up to 10 years at the time of opening the account (with 1 year grace period during initial launch).\n- **Nationality:** Indian resident girl child.\n- **Account Limit:** Maximum of two accounts per family (one for each girl child). Exception for triplets or twins born in first or second delivery.\n- **Guardian:** Account opened and operated by natural or legal guardian until girl reaches 18 years.",
+    "metadata": {
+      "source": "sukanya_samriddhi.md",
+      "parent_title": "Sukanya Samriddhi Yojana (SSY)",
+      "section": "Key Rules & Eligibility Criteria"
+    }
+  },
+  {
+    "doc_id": "sukanya_samriddhi_sec_3",
+    "title": "Sukanya Samriddhi Yojana (SSY) - Financial Terms and Benefits",
+    "content": "## Financial Terms and Benefits\n- **Minimum Deposit:** ₹250 per financial year.\n- **Maximum Deposit:** ₹1,50,000 per financial year.\n- **Interest Rate:** High sovereign interest rate (currently ~8.2% per annum, compounded annually).\n- **Tax Benefit:** Triple E (EEE) tax exemption under Section 80C of the Income Tax Act (deposit exempt, interest exempt, maturity amount exempt).\n- **Tenure:** Account matures after 21 years from date of opening or upon marriage of the girl child after age 18.\n- **Partial Withdrawal:** Up to 50% of the balance permitted for higher education after girl reaches 18 years or passes 10th standard.",
+    "metadata": {
+      "source": "sukanya_samriddhi.md",
+      "parent_title": "Sukanya Samriddhi Yojana (SSY)",
+      "section": "Financial Terms and Benefits"
+    }
+  },
+  {
+    "doc_id": "sukanya_samriddhi_sec_4",
+    "title": "Sukanya Samriddhi Yojana (SSY) - How to Open Account",
+    "content": "## How to Open Account\n- Open at any Post Office or authorized Commercial Bank (SBI, PNB, BoB, etc.) with girl's birth certificate and guardian's KYC.",
+    "metadata": {
+      "source": "sukanya_samriddhi.md",
+      "parent_title": "Sukanya Samriddhi Yojana (SSY)",
+      "section": "How to Open Account"
+    }
+  },
+  {
+    "doc_id": "sukanya_samriddhi_sec_5",
+    "title": "Sukanya Samriddhi Yojana (SSY) - Official Portal & Source",
+    "content": "## Official Portal & Source\n- Portal: India Post / Reserve Bank of India\n- Ministry: Ministry of Finance / Ministry of Women and Child Development",
+    "metadata": {
+      "source": "sukanya_samriddhi.md",
+      "parent_title": "Sukanya Samriddhi Yojana (SSY)",
+      "section": "Official Portal & Source"
+    }
+  },
+  {
+    "doc_id": "mudra_yojana_sec_0",
+    "title": "Pradhan Mantri MUDRA Yojana (PMMY) - Overview",
+    "content": "# Pradhan Mantri MUDRA Yojana (PMMY)",
+    "metadata": {
+      "source": "mudra_yojana.md",
+      "parent_title": "Pradhan Mantri MUDRA Yojana (PMMY)",
+      "section": "Overview"
+    }
+  },
+  {
+    "doc_id": "mudra_yojana_sec_1",
+    "title": "Pradhan Mantri MUDRA Yojana (PMMY) - Overview",
+    "content": "## Overview\nPradhan Mantri MUDRA Yojana (PMMY) provides collateral-free loans up to ₹10 Lakh (recently expanded to ₹20 Lakh under Union Budget for past borrowers) to non-corporate, non-farm small and micro enterprises.",
+    "metadata": {
+      "source": "mudra_yojana.md",
+      "parent_title": "Pradhan Mantri MUDRA Yojana (PMMY)",
+      "section": "Overview"
+    }
+  },
+  {
+    "doc_id": "mudra_yojana_sec_2",
+    "title": "Pradhan Mantri MUDRA Yojana (PMMY) - Categories of MUDRA Loans",
+    "content": "## Categories of MUDRA Loans\n1. **Shishu:** Loans up to ₹50,000 (ideal for new startups, small shops, roadside stalls).\n2. **Kishore:** Loans above ₹50,000 and up to ₹5,00,000 (for purchasing equipment, machinery, inventory).\n3. **Tarun:** Loans above ₹5,00,000 and up to ₹10,00,000 / ₹20,00,000 (for expansion and scaling up business).",
+    "metadata": {
+      "source": "mudra_yojana.md",
+      "parent_title": "Pradhan Mantri MUDRA Yojana (PMMY)",
+      "section": "Categories of MUDRA Loans"
+    }
+  },
+  {
+    "doc_id": "mudra_yojana_sec_3",
+    "title": "Pradhan Mantri MUDRA Yojana (PMMY) - Eligibility Criteria",
+    "content": "## Eligibility Criteria\n- **Age:** 18 years to 65 years.\n- **Beneficiaries:** Any Indian citizen with a viable business plan for manufacturing, processing, trading, or service sector activities.\n- **Excluded:** Large corporations and agricultural farming (allied activities like dairy, poultry, fishery are included).\n- **Collateral:** No collateral security or third-party guarantee required.",
+    "metadata": {
+      "source": "mudra_yojana.md",
+      "parent_title": "Pradhan Mantri MUDRA Yojana (PMMY)",
+      "section": "Eligibility Criteria"
+    }
+  },
+  {
+    "doc_id": "mudra_yojana_sec_4",
+    "title": "Pradhan Mantri MUDRA Yojana (PMMY) - Benefits",
+    "content": "## Benefits\n- No processing fee for Shishu loans.\n- Access to formal banking credit without pledging physical assets.\n- MUDRA Card (RuPay Debit Card) provided for working capital withdrawals.",
+    "metadata": {
+      "source": "mudra_yojana.md",
+      "parent_title": "Pradhan Mantri MUDRA Yojana (PMMY)",
+      "section": "Benefits"
+    }
+  },
+  {
+    "doc_id": "mudra_yojana_sec_5",
+    "title": "Pradhan Mantri MUDRA Yojana (PMMY) - Official Portal & Source",
+    "content": "## Official Portal & Source\n- Official Portal: https://www.mudra.org.in\n- Portal for Application: https://www.udyamimitra.in",
+    "metadata": {
+      "source": "mudra_yojana.md",
+      "parent_title": "Pradhan Mantri MUDRA Yojana (PMMY)",
+      "section": "Official Portal & Source"
+    }
+  },
+  {
+    "doc_id": "naps_sec_0",
+    "title": "National Apprenticeship Promotion Scheme (NAPS-2) - Overview",
+    "content": "# National Apprenticeship Promotion Scheme (NAPS-2)",
+    "metadata": {
+      "source": "naps.md",
+      "parent_title": "National Apprenticeship Promotion Scheme (NAPS-2)",
+      "section": "Overview"
+    }
+  },
+  {
+    "doc_id": "naps_sec_1",
+    "title": "National Apprenticeship Promotion Scheme (NAPS-2) - Overview",
+    "content": "## Overview\nNational Apprenticeship Promotion Scheme (NAPS) aims to promote apprenticeship training in the country, providing financial support to enterprises and stipends to youth undergoing industrial on-the-job training.",
+    "metadata": {
+      "source": "naps.md",
+      "parent_title": "National Apprenticeship Promotion Scheme (NAPS-2)",
+      "section": "Overview"
+    }
+  },
+  {
+    "doc_id": "naps_sec_2",
+    "title": "National Apprenticeship Promotion Scheme (NAPS-2) - Eligibility Criteria",
+    "content": "## Eligibility Criteria\n- **Age:** Minimum 14 years (18 years for designated hazardous industries). Upper age usually not strictly capped, typically youth aged 14 to 35.\n- **Educational Qualification:** 5th pass, 8th pass, 10th pass, 12th pass, ITI pass, Diploma, or Degree holders depending on the designated trade.\n- **Aadhaar:** Aadhaar linked bank account is mandatory for receiving Direct Benefit Transfer (DBT) stipend.",
+    "metadata": {
+      "source": "naps.md",
+      "parent_title": "National Apprenticeship Promotion Scheme (NAPS-2)",
+      "section": "Eligibility Criteria"
+    }
+  },
+  {
+    "doc_id": "naps_sec_3",
+    "title": "National Apprenticeship Promotion Scheme (NAPS-2) - Key Benefits",
+    "content": "## Key Benefits\n- **Hands-on Industry Exposure:** Practical experience in manufacturing, automotive, electronics, logistics, retail, healthcare, etc.\n- **Government Stipend Support:** Direct Benefit Transfer (DBT) of 25% of prescribed stipend up to ₹1,500 per month per apprentice directly to the apprentice's bank account.\n- **Recognized Certification:** National Apprenticeship Certificate (NAC) issued by NCVT / MSDE upon completion.",
+    "metadata": {
+      "source": "naps.md",
+      "parent_title": "National Apprenticeship Promotion Scheme (NAPS-2)",
+      "section": "Key Benefits"
+    }
+  },
+  {
+    "doc_id": "naps_sec_4",
+    "title": "National Apprenticeship Promotion Scheme (NAPS-2) - How to Apply",
+    "content": "## How to Apply\n1. Register on the Apprenticeship India Portal `https://www.apprenticeshipindia.gov.in`.\n2. Complete e-KYC and profile creation.\n3. Search and apply for apprenticeship vacancies across registered companies and public sector undertakings.",
+    "metadata": {
+      "source": "naps.md",
+      "parent_title": "National Apprenticeship Promotion Scheme (NAPS-2)",
+      "section": "How to Apply"
+    }
+  },
+  {
+    "doc_id": "naps_sec_5",
+    "title": "National Apprenticeship Promotion Scheme (NAPS-2) - Official Portal & Source",
+    "content": "## Official Portal & Source\n- Official Portal: https://www.apprenticeshipindia.gov.in\n- Ministry: Ministry of Skill Development and Entrepreneurship (MSDE)",
+    "metadata": {
+      "source": "naps.md",
+      "parent_title": "National Apprenticeship Promotion Scheme (NAPS-2)",
+      "section": "Official Portal & Source"
+    }
+  }
+]

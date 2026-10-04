@@ -1,0 +1,32 @@
+# Python & Virtual Environments
+.venv/
+venv/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Sensitive Configuration & API Keys
+.env
+*.env
+ngrok.yml
+
+# SQLite Database & Storage
+Database/*.db
+Database/*.sqlite
+Database/*.sqlite3
+*.db
+*.log
+
+# Heavy GGUF Model weights (handled via Git LFS or external download)
+Models/*.gguf
+Models/*.bin
+Models/*.pt
+Models/*.pth
+
+# OS & Editor files
+.DS_Store
+.vscode/
+.idea/
+*.swp
