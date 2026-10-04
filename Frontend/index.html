@@ -491,14 +491,23 @@
         ws.send(JSON.stringify({ action: "text_message", session_id: sessionId, text: text.trim() }));
       } else {
         // REST fallback
+        showThinkingIndicator();
         fetch("/api/chat", { method: "POST", headers: {"Content-Type": "application/json"},
           body: JSON.stringify({ session_id: sessionId, text: text.trim() }) })
           .then(r => r.json())
           .then(data => {
+            removeThinkingIndicator();
             appendMessage("assistant", data.response, data.sources);
             updateLanguagePill(data.detected_language);
             updateProfileDisplay(data.extracted_attributes);
             updateSchemesDisplay(data.eligible_schemes);
+            if (data.response) {
+              speakBrowserChunk(data.response, data.detected_language);
+            }
+          })
+          .catch(err => {
+            removeThinkingIndicator();
+            console.error("Chat error:", err);
           });
       }
     }
@@ -530,6 +539,9 @@
     let isSpeaking = false;
     function speakBrowserChunk(text, lang, rate, pitch) {
       if (!('speechSynthesis' in window)) return;
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
       browserSpeechQueue.push({ text, lang, rate, pitch });
       if (!isSpeaking) drainBrowserSpeech();
     }
@@ -585,6 +597,9 @@
     // STT — Reliable Web Speech API with interim results
     // Works on Chrome, Edge, Safari (limited). Degrades gracefully.
     // ──────────────────────────────────────────────────────────────────────────
+    let capturedTranscript = "";
+    let hasSentFinal = false;
+
     function setupSpeechRecognition() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
@@ -602,6 +617,8 @@
 
       recognition.onstart = () => {
         isRecording = true;
+        capturedTranscript = "";
+        hasSentFinal = false;
         micRing.classList.remove("hidden");
         micBtn.classList.add("ring-4", "ring-orange-400");
         interruptPlayback();  // stop AI if it was speaking
@@ -622,11 +639,16 @@
           if (event.results[i].isFinal) final += t;
           else interim += t;
         }
+        const currentText = (final || interim || "").trim();
+        if (currentText) {
+          capturedTranscript = currentText;
+        }
         // Update interim display
         const el = document.getElementById("interimText");
-        if (el) el.textContent = interim || final || "Listening...";
+        if (el) el.textContent = currentText || "Listening...";
         // If final result available, send immediately
-        if (final.trim()) {
+        if (final.trim() && !hasSentFinal) {
+          hasSentFinal = true;
           removeInterimDiv();
           sendMessage(final.trim());
         }
@@ -636,9 +658,8 @@
         console.warn("STT error:", e.error);
         removeInterimDiv();
         if (e.error === "not-allowed") {
-          alert("Microphone access denied. Please allow microphone access in your browser settings.");
+          alert("Microphone access denied. Please click the lock icon in your browser address bar and set Microphone to 'Allow'.");
         } else if (e.error === "network") {
-          // Network errors are common on mobile — just restart
           console.warn("STT network error, will retry on next tap.");
         }
         stopRecording();
@@ -647,6 +668,12 @@
       recognition.onend = () => {
         stopRecording();
         removeInterimDiv();
+        // Fallback: If final event wasn't flagged but text was captured, send it
+        if (capturedTranscript.trim() && !hasSentFinal) {
+          hasSentFinal = true;
+          sendMessage(capturedTranscript.trim());
+          capturedTranscript = "";
+        }
       };
     }
 
