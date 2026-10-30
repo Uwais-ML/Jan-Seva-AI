@@ -42,6 +42,10 @@ def split_into_tts_chunks(text: str, max_chars: int = 140) -> List[str]:
     clean = re.sub(r'[*#_`~]', '', clean)           # **, ##, _, `, ~
     clean = re.sub(r'https?://\S+', '', clean)       # bare URLs
     clean = re.sub(r'•\s*', '', clean)               # bullet points
+    clean = re.sub(r'4\.0', '4', clean)             # PMKVY 4.0 -> PMKVY 4 (prevents 'dashamlav' robotic speech)
+    clean = re.sub(r'(\d+)\.0\b', r'\1', clean)     # 5.0 -> 5
+    clean = re.sub(r'\b0\.(\d+)', r'point \1', clean)
+    clean = re.sub(r'₹\s*(\d+)', r'\1 rupaye ', clean) # ₹5000 -> 5000 rupaye
     clean = re.sub(r'\n+', ' ', clean)               # newlines → space
     clean = re.sub(r'\s{2,}', ' ', clean).strip()   # collapse whitespace
 

@@ -3,12 +3,15 @@ Official Government Scheme Form-Filling Assistant ("Form Sahayak").
 Enables interactive, voice-driven official application form filling for Indian Citizens.
 """
 
+import os
 import re
 import json
 import random
 import logging
 from datetime import datetime
 from typing import Dict, Any, List, Optional, Tuple
+
+from openai import OpenAI
 
 from Database.session import SessionLocal
 from Database.models import ApplicationSubmissionModel
@@ -653,6 +656,50 @@ class FormFillingAgent:
         return None
 
     @staticmethod
+    def _extract_name_with_llm(text: str) -> str:
+        """
+        Use Groq LLM to extract a clean human name from messy speech input.
+        E.g. 'Haan mera naam Owais Chaudhary hai' → 'Owais Chaudhary'
+             'Aap Owais likh lo' → 'Owais'
+             'Likh lijiye Amit Kumar ji' → 'Amit Kumar'
+        Falls back to regex stripping if API call fails.
+        """
+        try:
+            client = OpenAI(
+                base_url=os.getenv("OPENAI_BASE_URL", "https://api.groq.com/openai/v1"),
+                api_key=os.getenv("OPENAI_API_KEY", ""),
+            )
+            resp = client.chat.completions.create(
+                model=os.getenv("DEFAULT_LLM_MODEL", "qwen/qwen3-8b"),
+                messages=[
+                    {
+                        "role": "system",
+                        "content": (
+                            "Extract ONLY the person's real full name from the input. "
+                            "Output ONLY the name itself — no punctuation, no filler words, "
+                            "no honorifics like ji/sir/shri/smt. Capitalize each word."
+                        ),
+                    },
+                    {"role": "user", "content": text},
+                ],
+                max_tokens=15,
+                temperature=0.0,
+            )
+            extracted = resp.choices[0].message.content.strip()
+            # Sanity check: result should look like a name (letters, spaces, hyphens only)
+            if re.match(r"^[A-Za-z\s\-'\.]{2,50}$", extracted):
+                return extracted.title()
+        except Exception as e:
+            logger.warning(f"LLM name extraction failed, falling back to regex: {e}")
+
+        # Regex fallback
+        filler = re.compile(
+            r'^(mera naam|naam hai|my name is|i am called|i am|naam|shri|smt|aap|likh lo|likh lijiye)\s*',
+            re.IGNORECASE,
+        )
+        return filler.sub('', text.strip()).title().strip()
+
+    @staticmethod
     def _extract_field_value(field_key: str, text: str) -> Any:
         """Extracts cleaned value from citizen's utterance."""
         clean = text.strip()
@@ -673,10 +720,9 @@ class FormFillingAgent:
             if nums:
                 return int(nums[0])
 
-        # Names: strip greeting filler
+        # Names: use LLM to extract clean name from messy spoken input
         if "name" in field_key:
-            filler = re.compile(r'^(mera naam|naam hai|my name is|i am|naam|shri|smt)\s*', re.IGNORECASE)
-            return filler.sub('', clean).title().strip()
+            return FormFillingAgent._extract_name_with_llm(clean)
 
         # Aadhaar last 4
         if "aadhaar" in field_key or "ration" in field_key or "id" in field_key:

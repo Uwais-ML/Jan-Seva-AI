@@ -154,15 +154,23 @@ class AgentOrchestrator:
         elif "mudra" in clean_input.lower() or "loan" in clean_input.lower():
             session.last_discussed_scheme = "mudra_yojana"
 
-        # Offer to fill the application form ONLY if user explicitly asked about applying / registration
-        explicit_apply_keywords = ["apply", "kaise bhare", "kaise apply", "form kaise", "registration", "admission", "apply karna hai", "form bharna hai", "aavedan"]
-        if session.last_discussed_scheme and any(k in clean_input.lower() for k in explicit_apply_keywords):
+        # Proactively offer form filling ONCE per scheme, or when user asks about applying
+        explicit_apply_keywords = ["apply", "kaise bhare", "kaise apply", "form kaise", "registration", "admission", "apply karna hai", "form bharna hai", "aavedan", "karna chahta", "chahiye"]
+        should_offer = False
+        if session.last_discussed_scheme:
+            if session.form_offered_for != session.last_discussed_scheme:
+                should_offer = True
+                session.form_offered_for = session.last_discussed_scheme
+            elif any(k in clean_input.lower() for k in explicit_apply_keywords):
+                should_offer = True
+
+        if should_offer and session.last_discussed_scheme:
             if detected_lang == "hi":
-                form_offer = " क्या आप चाहते हैं कि मैं अभी आपका आधिकारिक फॉर्म भर दूँ? बस 2 मिनट लगेंगे!"
+                form_offer = " आप चाहें तो मैं अभी आपका आधिकारिक आवेदन फॉर्म भर देता हूँ। क्या शुरू करें?"
             elif detected_lang == "hinglish":
-                form_offer = " Kya aap chahte hain ki main abhi aapka official form bhar doon? Bas 2 minute lagenge!"
+                form_offer = " Aap chahein toh main abhi aapka official application form bhar deta hoon. Kya shuru karein?"
             else:
-                form_offer = " Would you like me to fill out your official application form right now?"
+                form_offer = " If you like, I can help you fill out the official application form right now. Shall we start?"
             if form_offer.strip() not in response_text:
                 response_text += form_offer
 
