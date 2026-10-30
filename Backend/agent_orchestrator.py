@@ -154,8 +154,9 @@ class AgentOrchestrator:
         elif "mudra" in clean_input.lower() or "loan" in clean_input.lower():
             session.last_discussed_scheme = "mudra_yojana"
 
-        # Offer to fill the application form
-        if session.last_discussed_scheme:
+        # Offer to fill the application form ONLY if user explicitly asked about applying / registration
+        explicit_apply_keywords = ["apply", "kaise bhare", "kaise apply", "form kaise", "registration", "admission", "apply karna hai", "form bharna hai", "aavedan"]
+        if session.last_discussed_scheme and any(k in clean_input.lower() for k in explicit_apply_keywords):
             if detected_lang == "hi":
                 form_offer = " क्या आप चाहते हैं कि मैं अभी आपका आधिकारिक फॉर्म भर दूँ? बस 2 मिनट लगेंगे!"
             elif detected_lang == "hinglish":

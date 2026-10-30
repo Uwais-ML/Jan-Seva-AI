@@ -412,8 +412,9 @@ async def websocket_audio_handler(request: web.Request) -> web.WebSocketResponse
         elif "mudra" in user_text.lower() or "loan" in user_text.lower():
             session.last_discussed_scheme = "mudra_yojana"
 
-        # Offer to fill the official application form
-        if session.last_discussed_scheme:
+        # Offer to fill the official application form ONLY if user explicitly asked about applying / registration
+        explicit_apply_keywords = ["apply", "kaise bhare", "kaise apply", "form kaise", "registration", "admission", "apply karna hai", "form bharna hai", "aavedan"]
+        if session.last_discussed_scheme and any(k in user_text.lower() for k in explicit_apply_keywords):
             if detected_lang == "hi":
                 form_offer = " क्या आप चाहते हैं कि मैं अभी आपका फॉर्म भर दूँ? बस 2 मिनट लगेंगे!"
             elif detected_lang == "hinglish":
@@ -452,6 +453,45 @@ async def websocket_audio_handler(request: web.Request) -> web.WebSocketResponse
                 if action == "interrupt":
                     session.signal_interruption()
                     await ws.send_json({"type": "interrupted"})
+
+                elif action == "start_form":
+                    scheme_id = payload.get("scheme_id", "")
+                    form_res = form_agent.start_form(session, scheme_id or "pmkvy", "hinglish")
+                    resp_text = form_res["response"]
+                    session.add_message("assistant", resp_text, "hinglish")
+                    await ws.send_json({
+                        "type": "form_update",
+                        "form": form_res.get("form_state"),
+                        "is_active": True
+                    })
+                    await ws.send_json({"type": "token", "text": resp_text, "sentence_index": 0})
+                    audio_result = await orchestrator.tts.synthesize_chunk(resp_text, "hinglish")
+                    if audio_result and not session.interruption_event.is_set():
+                        await ws.send_json({"type": "audio_chunk", "sentence_index": 0, **audio_result})
+                    await ws.send_json({
+                        "type": "response_complete",
+                        "full_response": resp_text,
+                        "sources": [form_res.get("portal_url", "https://india.gov.in")],
+                        "form_state": form_res.get("form_state"),
+                        "is_form_active": True
+                    })
+                    await ws.send_json({"type": "audio_complete"})
+
+                elif action == "update_form_field":
+                    field_key = payload.get("field_key")
+                    field_val = payload.get("field_value")
+                    if session.active_form and field_key in session.active_form["fields"]:
+                        session.active_form["fields"][field_key]["value"] = field_val
+                        session.active_form["fields"][field_key]["status"] = "completed"
+                        next_k = form_agent._get_next_pending_field(session.active_form)
+                        session.active_form["current_field_key"] = next_k
+                        if not next_k:
+                            session.active_form["awaiting_confirmation"] = True
+                        await ws.send_json({
+                            "type": "form_update",
+                            "form": form_agent.get_form_state_summary(session.active_form),
+                            "is_active": True
+                        })
 
                 elif action == "text_message":
                     await process_turn(

@@ -220,8 +220,15 @@
         </div>
 
         <!-- Fields List -->
-        <div id="formFieldsContainer" class="mt-4 space-y-2 max-h-56 overflow-y-auto pr-1 text-xs">
+        <div id="formFieldsContainer" class="mt-4 space-y-2.5 max-h-64 overflow-y-auto pr-1 text-xs">
           <!-- Dynamically populated fields -->
+        </div>
+
+        <!-- Action button when all fields completed -->
+        <div id="formSubmitActionArea" class="hidden mt-3 pt-3 border-t border-slate-800">
+          <button onclick="submitFormDirectly()" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-white font-bold text-xs flex items-center justify-center space-x-2 shadow-lg shadow-emerald-600/20 transition">
+            <span>🚀 Submit Application to Official Portal</span>
+          </button>
         </div>
 
         <!-- Form Submission Receipt (shown when submitted) -->
@@ -543,7 +550,11 @@
     }
 
     // ── Form Assistant UI Functions ──────────────────────────────────────────
+    let currentFormState = null;
+    let currentActiveFieldKey = null;
+
     function renderFormWidget(form, isActive) {
+      currentFormState = form;
       const card = document.getElementById("formAssistantCard");
       const nameEl = document.getElementById("formSchemeName");
       const statusBadge = document.getElementById("formStatusBadge");
@@ -552,76 +563,114 @@
       const progBar = document.getElementById("formProgressBar");
       const container = document.getElementById("formFieldsContainer");
       const receipt = document.getElementById("formReceiptContainer");
+      const submitActionArea = document.getElementById("formSubmitActionArea");
 
       if (!form) {
+        currentActiveFieldKey = null;
         card.classList.add("hidden");
         return;
       }
 
+      currentActiveFieldKey = form.current_field_key;
       card.classList.remove("hidden");
       receipt.classList.add("hidden");
 
       nameEl.innerText = form.scheme_name || "Official Application Form";
       if (form.portal_url) {
-        linkEl.innerHTML = `<a href="${escapeHtml(form.portal_url)}" target="_blank" class="text-orange-400 hover:underline">Portal: ${escapeHtml(form.portal_url)} ↗</a>`;
+        linkEl.innerHTML = `<a href="${escapeHtml(form.portal_url)}" target="_blank" class="text-orange-400 hover:underline">Official Portal: ${escapeHtml(form.portal_url)} ↗</a>`;
       }
 
       const pct = form.progress_percentage || 0;
-      progText.innerText = `${pct}%`;
+      progText.innerText = `${pct}% Complete`;
       progBar.style.width = `${pct}%`;
 
       if (form.status === "SUBMITTED") {
         statusBadge.className = "text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
-        statusBadge.innerText = "Submitted";
+        statusBadge.innerText = "✓ Submitted";
       } else if (form.awaiting_confirmation) {
         statusBadge.className = "text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20 animate-pulse";
         statusBadge.innerText = "Ready to Submit";
       } else {
         statusBadge.className = "text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20";
-        statusBadge.innerText = "Filling via Voice";
+        statusBadge.innerText = "Live Auto-Filling";
       }
 
       container.innerHTML = "";
       (form.fields || []).forEach(f => {
-        const row = document.createElement("div");
-        const isCurrent = f.status === "current";
+        const isCurrent = f.status === "current" || f.key === form.current_field_key;
         const isDone = f.value !== null && f.value !== undefined && f.value !== "";
 
-        row.className = `p-2 rounded-xl border flex items-center justify-between transition-all ${
+        const fieldBox = document.createElement("div");
+        fieldBox.className = `p-2.5 rounded-xl border transition-all ${
           isCurrent
-            ? "bg-orange-500/10 border-orange-500/40 shadow-sm"
+            ? "bg-orange-500/10 border-orange-500 ring-2 ring-orange-500/30"
             : isDone
-            ? "bg-slate-900/60 border-slate-700/60"
-            : "bg-slate-900/30 border-slate-800 opacity-60"
+            ? "bg-slate-900/80 border-emerald-500/40"
+            : "bg-slate-900/40 border-slate-800"
         }`;
 
-        const iconHtml = isDone
-          ? `<span class="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-[10px] font-bold">✓</span>`
-          : isCurrent
-          ? `<span class="w-2 h-2 rounded-full bg-orange-400 animate-ping"></span>`
-          : `<span class="w-4 h-4 rounded-full bg-slate-700 text-slate-400 flex items-center justify-center text-[9px]">•</span>`;
-
-        const valHtml = isDone
-          ? `<span class="font-semibold text-slate-100 max-w-[55%] text-right truncate">${escapeHtml(String(f.value))}</span>`
-          : isCurrent
-          ? `<span class="text-orange-400 font-medium italic text-[11px] animate-pulse">Listening...</span>`
-          : `<span class="text-slate-500 italic text-[11px]">Waiting...</span>`;
-
-        row.innerHTML = `
-          <div class="flex items-center space-x-2">
-            ${iconHtml}
-            <div>
-              <span class="font-medium text-slate-300 block text-xs">${escapeHtml(f.label)}</span>
-              <span class="text-[10px] text-slate-500">${escapeHtml(f.hindi_label || "")}</span>
-            </div>
+        fieldBox.innerHTML = `
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="text-xs font-semibold ${isCurrent ? 'text-orange-400' : isDone ? 'text-emerald-300' : 'text-slate-300'} flex items-center space-x-1.5">
+              <span>${escapeHtml(f.label)}</span>
+              <span class="text-[10px] text-slate-400 font-normal">(${escapeHtml(f.hindi_label || "")})</span>
+            </label>
+            <span class="text-[10px] px-2 py-0.5 rounded font-mono ${
+              isDone
+                ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"
+                : isCurrent
+                ? "bg-orange-500/20 text-orange-300 border border-orange-500/40 animate-pulse font-semibold"
+                : "bg-slate-800 text-slate-500"
+            }">
+              ${isDone ? "✓ Filled" : isCurrent ? "🎙️ Listening..." : "Pending"}
+            </span>
           </div>
-          ${valHtml}
+          <div>
+            <input
+              id="field_input_${escapeHtml(f.key)}"
+              type="text"
+              value="${escapeHtml(String(f.value || ''))}"
+              placeholder="${isCurrent ? 'Listening to voice or type here...' : 'Waiting for answer...'}"
+              onchange="onFieldManualEdit('${escapeHtml(f.key)}', this.value)"
+              class="w-full text-xs px-3 py-1.5 rounded-lg bg-slate-950 border ${
+                isCurrent
+                  ? 'border-orange-500 text-orange-100 placeholder-orange-400/60 font-medium'
+                  : isDone
+                  ? 'border-slate-700 text-slate-100 font-medium'
+                  : 'border-slate-800 text-slate-400 placeholder-slate-600'
+              } focus:outline-none focus:ring-1 focus:ring-orange-500 transition"
+            />
+          </div>
         `;
-        container.appendChild(row);
+        container.appendChild(fieldBox);
       });
+
+      if (submitActionArea) {
+        if (form.awaiting_confirmation && form.status !== "SUBMITTED") {
+          submitActionArea.classList.remove("hidden");
+        } else {
+          submitActionArea.classList.add("hidden");
+        }
+      }
+    }
+
+    function onFieldManualEdit(key, value) {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({
+          action: "update_form_field",
+          session_id: sessionId,
+          field_key: key,
+          field_value: value
+        }));
+      }
+    }
+
+    function submitFormDirectly() {
+      sendMessage("submit");
     }
 
     function renderFormSubmissionSuccess(app) {
+      currentActiveFieldKey = null;
       const card = document.getElementById("formAssistantCard");
       const receipt = document.getElementById("formReceiptContainer");
       const refEl = document.getElementById("receiptAppRef");
@@ -629,15 +678,17 @@
       const statusBadge = document.getElementById("formStatusBadge");
       const progBar = document.getElementById("formProgressBar");
       const progText = document.getElementById("formProgressText");
+      const submitActionArea = document.getElementById("formSubmitActionArea");
 
       card.classList.remove("hidden");
       receipt.classList.remove("hidden");
+      if (submitActionArea) submitActionArea.classList.add("hidden");
 
       statusBadge.className = "text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
-      statusBadge.innerText = "Submitted";
+      statusBadge.innerText = "✓ Submitted";
 
       progBar.style.width = "100%";
-      progText.innerText = "100%";
+      progText.innerText = "100% Complete";
 
       if (app && app.application_ref) {
         refEl.innerText = app.application_ref;
@@ -646,6 +697,7 @@
     }
 
     function hideFormWidget() {
+      currentActiveFieldKey = null;
       const card = document.getElementById("formAssistantCard");
       if (card) card.classList.add("hidden");
     }
@@ -862,6 +914,15 @@
         // Update interim display
         const el = document.getElementById("interimText");
         if (el) el.textContent = currentText || "Listening...";
+
+        // Real-time voice typing into active official form field
+        if (currentActiveFieldKey) {
+          const activeInput = document.getElementById("field_input_" + currentActiveFieldKey);
+          if (activeInput) {
+            activeInput.value = currentText;
+            activeInput.classList.add("ring-2", "ring-orange-400", "bg-orange-500/10");
+          }
+        }
         // If final result available, send immediately
         if (final.trim() && !hasSentFinal) {
           hasSentFinal = true;
