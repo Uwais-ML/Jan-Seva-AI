@@ -30,3 +30,5 @@ Models/*.pth
 .vscode/
 .idea/
 *.swp
+
+cloudflared
