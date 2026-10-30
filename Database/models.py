@@ -88,3 +88,18 @@ class ConversationLogModel(Base):
     sources = Column(JSON, default=list)  # cited sources / portals
     audio_latency_ms = Column(Float, nullable=True)
     timestamp = Column(DateTime, default=datetime.utcnow)
+
+
+class ApplicationSubmissionModel(Base):
+    """Stores officially filled application forms submitted by the citizen assistant."""
+    __tablename__ = "application_submissions"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    session_id = Column(String(128), nullable=False, index=True)
+    application_ref = Column(String(64), unique=True, nullable=False, index=True)
+    scheme_id = Column(String(64), nullable=False, index=True)
+    scheme_name = Column(String(255), nullable=False)
+    form_data = Column(JSON, nullable=False)
+    status = Column(String(32), default="SUBMITTED")  # DRAFT, IN_PROGRESS, SUBMITTED
+    submitted_at = Column(DateTime, default=datetime.utcnow)
+

@@ -20,6 +20,7 @@ from Database.rules_engine import EligibilityRulesEngine, SchemeMatchResult
 from STT.stt_engine import STTEngine
 from STT.TTS.tts_engine import TTSEngine
 from Backend.session_manager import UserSession, session_registry
+from Backend.form_filling_agent import form_agent
 
 logger = logging.getLogger(__name__)
 
@@ -79,6 +80,23 @@ class AgentOrchestrator:
         # Log user message
         session.add_message("user", clean_input, detected_lang)
 
+        # Check if form assistant is active OR user wants to fill/apply for a scheme
+        form_intent = form_agent.detect_form_intent(clean_input, session)
+        if session.active_form is not None or form_intent == "start":
+            form_res = form_agent.process_turn(session, clean_input, detected_lang)
+            session.add_message("assistant", form_res["response"], detected_lang)
+            return {
+                "response": form_res["response"],
+                "detected_language": detected_lang,
+                "extracted_attributes": session.attributes,
+                "eligible_schemes": [],
+                "sources": [form_res.get("portal_url", "https://india.gov.in")],
+                "form_state": form_res.get("form_state"),
+                "is_form_active": form_res.get("is_active", False),
+                "is_submitted": form_res.get("is_submitted", False),
+                "application_ref": form_res.get("application_ref")
+            }
+
         # 4. Check Eligibility via Rules Engine
         eligible_schemes: List[SchemeMatchResult] = []
         with SessionLocal() as db:
@@ -121,6 +139,31 @@ class AgentOrchestrator:
                 names = " and ".join([s.scheme_name for s in top_schemes])
                 extra = f" By the way, looking at your profile, you might actually qualify for {names} — want me to walk you through those?"
             response_text += extra
+
+        # Record last discussed scheme for form filling context
+        if eligible_schemes:
+            session.last_discussed_scheme = eligible_schemes[0].scheme_id
+        elif "pmkvy" in clean_input.lower() or "skill" in clean_input.lower() or "training" in clean_input.lower():
+            session.last_discussed_scheme = "pmkvy"
+        elif "ayushman" in clean_input.lower() or "health" in clean_input.lower() or "hospital" in clean_input.lower():
+            session.last_discussed_scheme = "ayushman_bharat"
+        elif "kisan" in clean_input.lower() or "farmer" in clean_input.lower():
+            session.last_discussed_scheme = "pm_kisan"
+        elif "svanidhi" in clean_input.lower() or "vendor" in clean_input.lower() or "thela" in clean_input.lower():
+            session.last_discussed_scheme = "pm_svanidhi"
+        elif "mudra" in clean_input.lower() or "loan" in clean_input.lower():
+            session.last_discussed_scheme = "mudra_yojana"
+
+        # Offer to fill the application form
+        if session.last_discussed_scheme:
+            if detected_lang == "hi":
+                form_offer = " क्या आप चाहते हैं कि मैं अभी आपका आधिकारिक फॉर्म भर दूँ? बस 2 मिनट लगेंगे!"
+            elif detected_lang == "hinglish":
+                form_offer = " Kya aap chahte hain ki main abhi aapka official form bhar doon? Bas 2 minute lagenge!"
+            else:
+                form_offer = " Would you like me to fill out your official application form right now?"
+            if form_offer.strip() not in response_text:
+                response_text += form_offer
 
         # Log assistant message
         session.add_message("assistant", response_text, detected_lang, sources=sources)

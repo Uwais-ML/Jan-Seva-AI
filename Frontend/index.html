@@ -94,6 +94,9 @@
       <!-- Quick Suggestion Chips -->
       <div class="px-4 py-2 border-t border-slate-800/80 bg-slate-900/40 flex items-center gap-2 overflow-x-auto text-xs whitespace-nowrap scrollbar-none">
         <span class="text-slate-500 font-medium text-[11px]">Quick Prompts:</span>
+        <button class="chip px-3 py-1 rounded-full bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-500/50 text-emerald-300 font-semibold transition shadow-sm" onclick="sendSuggestion('Mera PMKVY official registration form bhar do')">
+          📝 Form Sahayak (Auto-Fill Form)
+        </button>
         <button class="chip px-3 py-1 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 transition" onclick="sendSuggestion('Mujhe free skill training chahiye, kya scheme hai?')">
           💡 Skill Training (PMKVY)
         </button>
@@ -185,6 +188,62 @@
         <p class="text-[11px] text-slate-500 mt-3 italic">
           💡 Demographic details are extracted automatically from your speech/chat to deterministically match government eligibility rules.
         </p>
+      </div>
+
+      <!-- Live Interactive Official Form Card ("Form Sahayak") -->
+      <div id="formAssistantCard" class="hidden bg-gradient-to-br from-slate-900 to-slate-950 border border-orange-500/40 rounded-2xl p-5 shadow-2xl backdrop-blur-sm transition-all duration-300">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-8 h-8 rounded-lg bg-orange-500/20 border border-orange-500/30 flex items-center justify-center text-orange-400 font-bold text-sm">
+              📝
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <h2 id="formSchemeName" class="font-bold text-xs sm:text-sm text-white">Official Application Form</h2>
+                <span id="formStatusBadge" class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">In Progress</span>
+              </div>
+              <p id="formPortalLink" class="text-[10px] text-slate-400">Official Government Portal</p>
+            </div>
+          </div>
+          <button onclick="cancelActiveForm()" class="text-[11px] text-slate-400 hover:text-red-400 transition" title="Cancel Application">✕ Cancel</button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="mt-4">
+          <div class="flex justify-between items-center text-xs mb-1.5">
+            <span class="text-slate-400 text-[11px]">Completion Progress:</span>
+            <span id="formProgressText" class="font-bold text-orange-400 text-xs">0%</span>
+          </div>
+          <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+            <div id="formProgressBar" class="bg-gradient-to-r from-orange-500 to-emerald-500 h-full w-0 transition-all duration-500"></div>
+          </div>
+        </div>
+
+        <!-- Fields List -->
+        <div id="formFieldsContainer" class="mt-4 space-y-2 max-h-56 overflow-y-auto pr-1 text-xs">
+          <!-- Dynamically populated fields -->
+        </div>
+
+        <!-- Form Submission Receipt (shown when submitted) -->
+        <div id="formReceiptContainer" class="hidden mt-4 pt-4 border-t border-slate-800 bg-emerald-950/30 border border-emerald-500/30 rounded-xl p-3.5 text-center">
+          <div class="w-10 h-10 mx-auto rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 text-lg mb-2">
+            ✓
+          </div>
+          <h3 class="font-bold text-emerald-400 text-sm">Application Successfully Registered!</h3>
+          <p class="text-[11px] text-slate-300 mt-1">Official Reference Number:</p>
+          <div id="receiptAppRef" class="mt-1 font-mono text-sm font-bold text-white bg-slate-900/90 py-1 px-3 rounded-lg border border-slate-700 inline-block tracking-wider">
+            PMKVY-2026-IND-XXXX
+          </div>
+          <p id="receiptDate" class="text-[10px] text-slate-400 mt-2">Submitted on 30 October 2026</p>
+          <div class="mt-3 flex items-center justify-center space-x-2">
+            <button onclick="window.print()" class="px-3 py-1 text-xs font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition shadow-sm">
+              🖨️ Print Receipt
+            </button>
+            <button onclick="dismissReceipt()" class="px-3 py-1 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
+              Close
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- Deterministic Schemes Match List -->
@@ -348,6 +407,31 @@
         // ── Full response complete: finalise bubble with sources ──────────────
         case "response_complete":
           finaliseStreamingBubble(msg.sources || []);
+          if (msg.form_state) {
+            renderFormWidget(msg.form_state, msg.is_form_active);
+          }
+          if (msg.is_submitted && msg.application_ref) {
+            renderFormSubmissionSuccess({
+              application_ref: msg.application_ref,
+              portal_url: (msg.sources && msg.sources[0]) || "",
+              form: msg.form_state
+            });
+          }
+          break;
+
+        // ── Form Assistant Updates ───────────────────────────────────────────
+        case "form_update":
+          if (msg.form) {
+            renderFormWidget(msg.form, msg.is_active);
+          } else {
+            hideFormWidget();
+          }
+          break;
+
+        case "form_submitted":
+          if (msg.application) {
+            renderFormSubmissionSuccess(msg.application);
+          }
           break;
 
         // ── Audio stream done ─────────────────────────────────────────────────
@@ -448,9 +532,131 @@
             <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">${Math.round((s.match_score || 1) * 100)}% Match</span>
           </div>
           <p class="text-[11px] text-slate-300 mt-1 line-clamp-2">${escapeHtml(s.benefits || "")}</p>
-          ${s.portal_url ? `<a href="${escapeHtml(s.portal_url)}" target="_blank" class="inline-block mt-2 text-[10px] text-blue-400 hover:underline">Official Portal ↗</a>` : ""}`;
+          <div class="flex items-center space-x-2 mt-2">
+            ${s.portal_url ? `<a href="${escapeHtml(s.portal_url)}" target="_blank" class="text-[10px] text-blue-400 hover:underline">Official Portal ↗</a>` : ""}
+            <button onclick="sendSuggestion('Mera ${escapeHtml(s.scheme_name)} ka official form bhar do')" class="px-2 py-0.5 text-[10px] rounded bg-orange-500/20 hover:bg-orange-500/30 text-orange-300 border border-orange-500/30 font-medium transition">
+              📝 Auto-Fill Form
+            </button>
+          </div>`;
         schemesList.appendChild(div);
       });
+    }
+
+    // ── Form Assistant UI Functions ──────────────────────────────────────────
+    function renderFormWidget(form, isActive) {
+      const card = document.getElementById("formAssistantCard");
+      const nameEl = document.getElementById("formSchemeName");
+      const statusBadge = document.getElementById("formStatusBadge");
+      const linkEl = document.getElementById("formPortalLink");
+      const progText = document.getElementById("formProgressText");
+      const progBar = document.getElementById("formProgressBar");
+      const container = document.getElementById("formFieldsContainer");
+      const receipt = document.getElementById("formReceiptContainer");
+
+      if (!form) {
+        card.classList.add("hidden");
+        return;
+      }
+
+      card.classList.remove("hidden");
+      receipt.classList.add("hidden");
+
+      nameEl.innerText = form.scheme_name || "Official Application Form";
+      if (form.portal_url) {
+        linkEl.innerHTML = `<a href="${escapeHtml(form.portal_url)}" target="_blank" class="text-orange-400 hover:underline">Portal: ${escapeHtml(form.portal_url)} ↗</a>`;
+      }
+
+      const pct = form.progress_percentage || 0;
+      progText.innerText = `${pct}%`;
+      progBar.style.width = `${pct}%`;
+
+      if (form.status === "SUBMITTED") {
+        statusBadge.className = "text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+        statusBadge.innerText = "Submitted";
+      } else if (form.awaiting_confirmation) {
+        statusBadge.className = "text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20 animate-pulse";
+        statusBadge.innerText = "Ready to Submit";
+      } else {
+        statusBadge.className = "text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20";
+        statusBadge.innerText = "Filling via Voice";
+      }
+
+      container.innerHTML = "";
+      (form.fields || []).forEach(f => {
+        const row = document.createElement("div");
+        const isCurrent = f.status === "current";
+        const isDone = f.value !== null && f.value !== undefined && f.value !== "";
+
+        row.className = `p-2 rounded-xl border flex items-center justify-between transition-all ${
+          isCurrent
+            ? "bg-orange-500/10 border-orange-500/40 shadow-sm"
+            : isDone
+            ? "bg-slate-900/60 border-slate-700/60"
+            : "bg-slate-900/30 border-slate-800 opacity-60"
+        }`;
+
+        const iconHtml = isDone
+          ? `<span class="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-[10px] font-bold">✓</span>`
+          : isCurrent
+          ? `<span class="w-2 h-2 rounded-full bg-orange-400 animate-ping"></span>`
+          : `<span class="w-4 h-4 rounded-full bg-slate-700 text-slate-400 flex items-center justify-center text-[9px]">•</span>`;
+
+        const valHtml = isDone
+          ? `<span class="font-semibold text-slate-100 max-w-[55%] text-right truncate">${escapeHtml(String(f.value))}</span>`
+          : isCurrent
+          ? `<span class="text-orange-400 font-medium italic text-[11px] animate-pulse">Listening...</span>`
+          : `<span class="text-slate-500 italic text-[11px]">Waiting...</span>`;
+
+        row.innerHTML = `
+          <div class="flex items-center space-x-2">
+            ${iconHtml}
+            <div>
+              <span class="font-medium text-slate-300 block text-xs">${escapeHtml(f.label)}</span>
+              <span class="text-[10px] text-slate-500">${escapeHtml(f.hindi_label || "")}</span>
+            </div>
+          </div>
+          ${valHtml}
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function renderFormSubmissionSuccess(app) {
+      const card = document.getElementById("formAssistantCard");
+      const receipt = document.getElementById("formReceiptContainer");
+      const refEl = document.getElementById("receiptAppRef");
+      const dateEl = document.getElementById("receiptDate");
+      const statusBadge = document.getElementById("formStatusBadge");
+      const progBar = document.getElementById("formProgressBar");
+      const progText = document.getElementById("formProgressText");
+
+      card.classList.remove("hidden");
+      receipt.classList.remove("hidden");
+
+      statusBadge.className = "text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+      statusBadge.innerText = "Submitted";
+
+      progBar.style.width = "100%";
+      progText.innerText = "100%";
+
+      if (app && app.application_ref) {
+        refEl.innerText = app.application_ref;
+      }
+      dateEl.innerText = `Submitted on ${new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}`;
+    }
+
+    function hideFormWidget() {
+      const card = document.getElementById("formAssistantCard");
+      if (card) card.classList.add("hidden");
+    }
+
+    function cancelActiveForm() {
+      sendMessage("cancel form");
+      hideFormWidget();
+    }
+
+    function dismissReceipt() {
+      hideFormWidget();
     }
 
     // ── Static message append (for history / user messages) ──────────────────
@@ -501,6 +707,16 @@
             updateLanguagePill(data.detected_language);
             updateProfileDisplay(data.extracted_attributes);
             updateSchemesDisplay(data.eligible_schemes);
+            if (data.form_state) {
+              renderFormWidget(data.form_state, data.is_form_active);
+            }
+            if (data.is_submitted) {
+              renderFormSubmissionSuccess({
+                application_ref: data.application_ref,
+                portal_url: (data.sources && data.sources[0]) || "",
+                form: data.form_state
+              });
+            }
             if (data.response) {
               speakBrowserChunk(data.response, data.detected_language);
             }

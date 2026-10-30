@@ -17,6 +17,8 @@ class UserSession:
         self.attributes: Dict[str, Any] = {}
         self.history: List[Dict[str, str]] = []
         self.interruption_event = asyncio.Event()
+        self.active_form: Optional[Dict[str, Any]] = None
+        self.last_discussed_scheme: Optional[str] = None
         self.created_at = datetime.utcnow()
         self.load_from_db()
 

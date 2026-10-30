@@ -29,6 +29,7 @@ if str(BASE_DIR) not in sys.path:
 from Backend.config import HOST, PORT, FRONTEND_DIR
 from Backend.agent_orchestrator import orchestrator
 from Backend.session_manager import session_registry
+from Backend.form_filling_agent import form_agent
 from Database.session import SessionLocal, init_db
 from Database.models import SchemeModel
 from Database.rules_engine import EligibilityRulesEngine
@@ -130,6 +131,24 @@ async def check_eligibility_handler(request: web.Request) -> web.Response:
         })
 
 
+async def application_lookup_handler(request: web.Request) -> web.Response:
+    """Fetches details of a submitted scheme application by reference number."""
+    app_ref = request.match_info.get("ref", "")
+    with SessionLocal() as db:
+        from Database.models import ApplicationSubmissionModel
+        sub = db.query(ApplicationSubmissionModel).filter_by(application_ref=app_ref).first()
+        if not sub:
+            return web.json_response({"error": "Application not found"}, status=404)
+        return web.json_response({
+            "application_ref": sub.application_ref,
+            "scheme_id": sub.scheme_id,
+            "scheme_name": sub.scheme_name,
+            "form_data": sub.form_data,
+            "status": sub.status,
+            "submitted_at": sub.submitted_at.isoformat() if sub.submitted_at else None
+        })
+
+
 async def get_session_handler(request: web.Request) -> web.Response:
     """Retrieves session profile attributes, persistent dialogue history, and eligible schemes."""
     session_id = request.match_info.get("session_id", "default_session")
@@ -219,6 +238,54 @@ async def websocket_audio_handler(request: web.Request) -> web.WebSocketResponse
         if extracted:
             session.update_attributes(extracted)
         session.add_message("user", user_text, detected_lang)
+
+        # ── Form Assistant Handling ──────────────────────────────────────────
+        form_intent = form_agent.detect_form_intent(user_text, session)
+        if session.active_form is not None or form_intent == "start":
+            form_res = form_agent.process_turn(session, user_text, detected_lang)
+            resp_text = form_res["response"]
+            session.add_message("assistant", resp_text, detected_lang)
+
+            await ws.send_json({
+                "type": "form_update",
+                "form": form_res.get("form_state"),
+                "is_active": form_res.get("is_active", False)
+            })
+
+            if form_res.get("is_submitted"):
+                await ws.send_json({
+                    "type": "form_submitted",
+                    "application": {
+                        "application_ref": form_res.get("application_ref"),
+                        "portal_url": form_res.get("portal_url"),
+                        "form": form_res.get("form_state")
+                    }
+                })
+
+            await ws.send_json({
+                "type": "token",
+                "text": resp_text,
+                "sentence_index": 0
+            })
+
+            audio_result = await orchestrator.tts.synthesize_chunk(resp_text, detected_lang)
+            if audio_result and not session.interruption_event.is_set():
+                await ws.send_json({
+                    "type": "audio_chunk",
+                    "sentence_index": 0,
+                    **audio_result
+                })
+
+            await ws.send_json({
+                "type": "response_complete",
+                "full_response": resp_text,
+                "sources": [form_res.get("portal_url", "https://india.gov.in")],
+                "form_state": form_res.get("form_state"),
+                "is_form_active": form_res.get("is_active", False),
+                "is_submitted": form_res.get("is_submitted", False)
+            })
+            await ws.send_json({"type": "audio_complete"})
+            return
 
         # ── Eligibility (deterministic, fast) ────────────────────────────────
         from Database.session import SessionLocal
@@ -331,6 +398,35 @@ async def websocket_audio_handler(request: web.Request) -> web.WebSocketResponse
             if audio_result and not session.interruption_event.is_set():
                 await ws.send_json({"type": "audio_chunk", "sentence_index": sentence_idx, **audio_result})
 
+        # Track last discussed scheme for context
+        if eligible_schemes:
+            session.last_discussed_scheme = eligible_schemes[0].scheme_id
+        elif "pmkvy" in user_text.lower() or "skill" in user_text.lower() or "training" in user_text.lower():
+            session.last_discussed_scheme = "pmkvy"
+        elif "ayushman" in user_text.lower() or "health" in user_text.lower() or "hospital" in user_text.lower():
+            session.last_discussed_scheme = "ayushman_bharat"
+        elif "kisan" in user_text.lower() or "farmer" in user_text.lower():
+            session.last_discussed_scheme = "pm_kisan"
+        elif "svanidhi" in user_text.lower() or "vendor" in user_text.lower() or "thela" in user_text.lower():
+            session.last_discussed_scheme = "pm_svanidhi"
+        elif "mudra" in user_text.lower() or "loan" in user_text.lower():
+            session.last_discussed_scheme = "mudra_yojana"
+
+        # Offer to fill the official application form
+        if session.last_discussed_scheme:
+            if detected_lang == "hi":
+                form_offer = " क्या आप चाहते हैं कि मैं अभी आपका फॉर्म भर दूँ? बस 2 मिनट लगेंगे!"
+            elif detected_lang == "hinglish":
+                form_offer = " Kya aap chahte hain ki main abhi aapka official application form bhar doon? Bas 2 minute lagenge!"
+            else:
+                form_offer = " Would you like me to fill out the official application form for you right now?"
+            if form_offer.strip() not in full_response:
+                full_response += form_offer
+                audio_result = await orchestrator.tts.synthesize_chunk(form_offer.strip(), detected_lang)
+                if audio_result and not session.interruption_event.is_set():
+                    await ws.send_json({"type": "audio_chunk", "sentence_index": sentence_idx, **audio_result})
+                    sentence_idx += 1
+
         # ── Persist assistant message ─────────────────────────────────────────
         session.add_message("assistant", full_response, detected_lang, sources=sources)
 
@@ -395,6 +491,7 @@ def create_app() -> web.Application:
     app.router.add_post("/api/chat", chat_handler)
     app.router.add_get("/api/schemes", schemes_handler)
     app.router.add_post("/api/check-eligibility", check_eligibility_handler)
+    app.router.add_get("/api/application/{ref}", application_lookup_handler)
     app.router.add_get("/api/session/{session_id}", get_session_handler)
     app.router.add_post("/api/session/{session_id}/reset", reset_session_handler)
     app.router.add_post("/api/ingest", ingest_handler)
